@@ -64,16 +64,16 @@
                 let regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
                 // alert(email);
                 if (email == "") {
-                    $("#errMsgE").html("Empty").addClass("not-ok").removeClass("ok");
-                    $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
-                    $(this).focus();
+                    $("#errMsgE").html("Email required").addClass("not-ok").removeClass("ok");
+                    // $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
+                    // $(this).focus();
                 } else if (regex.test(email) == false) {
                     $("#errMsgE").html("Invalid Email Id").addClass("not-ok").removeClass("ok");
-                    $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
+                //     $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
                 }
                 else {
-                    $("#errMsgE").html("Ok").addClass("ok").removeClass("not-ok");
-                    $("#errPicE").addClass("ok-pic").removeClass("not-ok-pic");
+                    $("#errMsgE").html("Valid Email Id").addClass("ok").removeClass("not-ok");
+                    // $("#errPicE").addClass("ok-pic").removeClass("not-ok-pic");
                 }
             })
             // --------------Validation(pwd)-------------------------------------
@@ -89,6 +89,15 @@
     });
   </script>
   <style>
+    .ok {
+  color: green;
+  font-weight: bold;
+}
+.not-ok {
+  color: red;
+  font-weight: bold;
+}
+
     body {
       background-color: #f8f9fa;
       color: #000;
@@ -480,19 +489,18 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email address</label>
-              <input type="email" class="form-control" aria-describedby="emailHelp" id="txtEmail" name="txtEmail">
+              <label for="txtEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="txtEmail" name="txtEmail">
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-              <div style="display: flex;">
+             
                         <!-- <div style="margin-right: 10px;" id="errPicE"></div> -->
                         <div id="errMsgE">&</div>
-                    </div>
+                    
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <label for="txtPwd" class="form-label">Password</label>
               <input type="password" class="form-control" id="txtPwd" name="txtPwd">
-              <div class="txtbox-div" style="width: 90%;">
-                    <input type="password" style="border: 0px;" id="txtPwd">
+              <div id="errPwd"></div>
                     <!-- <i class="fa-solid fa-eye fa-bounce" id="eye"></i> -->
 
                 </div>
