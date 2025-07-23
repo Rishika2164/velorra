@@ -489,51 +489,51 @@
   </div>
 
   <!-- SignUp Modal -->
-  <div class="modal fade" tabindex="-1" id="divSignUp">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">SignUp Modal</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="txtEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="txtEmail" name="txtEmail">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-
-              <!-- <div style="margin-right: 10px;" id="errPicE"></div> -->
-              <div id="errMsgE"></div>
-
-            </div>
-            <div class="mb-3">
-              <label for="txtPwd" class="form-label">Password</label>
-              <input type="password" class="form-control" id="txtPwd" name="txtPwd">
-              <div id="errPwd"></div>
-              <!-- <i class="fa-solid fa-eye fa-bounce" id="eye"></i> -->
-
-            </div>
-        </div>
-        <select class="form-select" aria-label="Default select example" id="userType" name="userType">
-          <option selected>SELECT USER TYPE❤️</option>
-          <option value="Player">player</option>
-          <option value="Organizer">organizer</option>
-
-        </select><br>
-        <input type="button" class="btn btn-secondary" id="btnFetchWithAJAX" value="Submit"></button>
+  <!-- SignUp Modal -->
+<div class="modal fade" tabindex="-1" id="divSignUp">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title">SignUp Modal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="txtEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="txtEmail" name="txtEmail">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <div id="errMsgE"></div>
+          </div>
+          <div class="mb-3">
+            <label for="txtPwd" class="form-label">Password</label>
+            <input type="password" class="form-control" id="txtPwd" name="txtPwd">
+            <div id="errPwd"></div>
+          </div>
+          <div class="mb-3">
+            <label for="userType" class="form-label">Select User Type</label>
+            <select class="form-select" id="userType" name="userType">
+              <option selected disabled>SELECT USER TYPE ❤️</option>
+              <option value="Player">Player</option>
+              <option value="Organizer">Organizer</option>
+            </select>
+          </div>
+          <div class="text-end">
+            <input type="button" class="btn btn-secondary" id="btnFetchWithAJAX" value="Submit">
+          </div>
         </form>
       </div>
-
     </div>
   </div>
+</div>
+
   </div>
 
   <!-- Login Modal -->
   <div class="modal" tabindex="-1" id="divLogin">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg">
+        <div class="modal-header bg-dark text-white">
           <h5 class="modal-title">Login Modal</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
