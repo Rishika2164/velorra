@@ -1,0 +1,193 @@
+<!-- 3 cards -->
+<html>
+
+<head>
+    <title>Player Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
+        integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+        </script>
+
+    <style>
+        .card {
+            transition: all 0.3s;
+            margin-top: 8px;
+            height: 350px;
+            border-radius: 15px;
+        }
+
+        .card:hover {
+            transform: scale(1.08);
+        }
+
+        .card-img-top {
+            object-fit: contain;
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+        }
+
+        .card-title {
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            border-radius: 20px;
+        }
+    </style>
+
+    <!-- ***********for showing welcome user*********************** -->
+    <script>
+        function showUser() {
+            let activeUser = localStorage.getItem("activeUser");
+            document.getElementById("welcome").innerHTML = activeUser;
+        }
+
+        // ------logout-------------
+        function doLogOut() {
+            localStorage.removeItem("activeUser");
+            location.href = "index.html";
+
+        }
+    </script>
+
+    <script>
+        // <!-- update modal pwd -->
+        var mymodule = angular.module("kuchModule", []);
+        mymodule.controller("kuchController", function ($scope,$http) {
+            $scope.doChangePwd = function(){
+                var url="/do-change-password?loginemail="+$scope.email +"&oldpass=" + $scope.oldpwd +"&newpass=" + $scope.newpwd;
+                $http.get(url).then(
+                    function(response){
+                        alert(response.data);
+                        document.getElementById("btnCloseModal").click();// Close modal on success
+
+                    },
+                    function(error){
+                        alert("Server error");
+                    }
+                );
+            };
+        });
+    </script>
+
+
+</head>
+
+<body onload="showUser();" ng-app="kuchModule" ng-controller="kuchController">
+    <nav class="navbar bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="" alt="">
+            </a>
+            <div class="me-5 bg-dark text-white">Welcome : <span id="welcome">*</span></div>
+        </div>
+    </nav>
+    <center>
+
+        <h2 mt-3>Player Dashboard</h2>
+    </center>
+    <div class="container mt-3">
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card shadow-lg mt-4">
+                    <img src="pics/profile.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Profile</h5>
+                        <center>
+                            <a href="profile-player.html" class="btn btn-secondary mt-4 px-5 py-2">Profile</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 ">
+                <div class="card shadow-lg mt-4">
+                    <img src="pics/explore.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Explore Events</h5>
+                        <center>
+                            <a href="tournamentFinder.html" class="btn btn-secondary mt-4 px-5 py-2">Explore</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 ">
+                <div class="card shadow-lg mt-4">
+                    <img src="pics/setting.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Settings</h5>
+                        <center>
+                            <button type="button" class="btn btn-secondary mt-4 px-5 py-2" value="chngePwd"
+                                data-bs-toggle="modal" data-bs-target="#chngePwd">Update Password</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-lg mt-4">
+                    <img src="pics/logout2.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Logout</h5>
+                        <center>
+                            <a href="#" class="btn btn-secondary mt-4 px-5 py-2" onclick="doLogOut();">Logout</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ************** Change Password Modal ************** -->
+            <div class="modal fade" tabindex="-1" id="chngePwd">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-dark text-white">
+                            <h5 class="modal-title">Update Password</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <h6>Email ID</h6>
+                                <input type="email" class="form-control" id="loginemail" ng-model="email" placeholder="Enter your email">
+                            </div>
+
+                            <div class="mb-3">
+                                <h6>Old Password</h6>
+                                <input type="password" class="form-control" id="oldpwd"
+                                    placeholder="Enter old password" ng-model="oldpwd">
+                            </div>
+
+                            <div class="mb-3">
+                                <h6>New Password</h6>
+                                <input type="password" class="form-control" id="newpwd"
+                                    placeholder="Enter new password" ng-model="newpwd">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseModal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" id="btnLogin" ng-click="doChangePwd()">Update</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

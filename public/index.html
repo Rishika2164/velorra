@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vellora Sports Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+  <script>
+
+    $(document).ready(function () {
+      $('#btnFetchWithAJAX').click(function () {
+        let obj = {
+          type: "get",
+          url: "/do-signup",
+          data: {
+            txtEmail: $('#txtEmail').val(),
+            txtPwd: $('#txtPwd').val(),
+            userType: $('#userType').val()
+          }
+        };
+        $.ajax(obj).then(
+          function (response) {
+            alert(response);
+          },
+          function (err) {
+            alert("Error: " + err.message);
+          });
+      });
+
+      $('#btnLogin').click(function () {
+        let obj = {
+          type: "get",
+          url: "/do-login",
+          data: {
+            loginemail: $('#loginemail').val(),
+            loginpwd: $('#loginpwd').val()
+          }
+        };
+        $.ajax(obj).then(
+          function (response) {
+            alert(response);
+            if (response == "Blocked") alert("Sorry! Your ID is Blocked");
+            else if (response == "Invalid") alert("Invalid email or password");
+            else {
+              localStorage.setItem("activeUser", $('#loginemail').val());
+              if (response == "player") location.href = "dash-player.html";
+              else if (response == "organizer") location.href = "dash-organizer.html";
+              else if (response == "admin") location.href = "dash-admin.html";
+            }
+          },
+          function (err) {
+            alert("Error: " + err.message);
+          });
+      });
+    });
+  </script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #000;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url(pics/bg3.jpeg);
+
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
+
+    .navbar {
+      background-color: white;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: #000 !important;
+    }
+
+    .btn-custom {
+      background-color: #000;
+      color: #fff;
+      border: 2px solid #000;
+      transition: 0.3s;
+    }
+
+    .btn-custom:hover {
+      background-color: transparent;
+      color: #000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: #f1f1f1;
+      color: #000;
+      border: 1px solid #ced4da;
+    }
+
+    .form-control::placeholder {
+      color: #6c757d;
+    }
+
+    .form-label,
+    .form-text {
+      color: #6c757d;
+    }
+
+    .modal-header {
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .modal-footer {
+      border-top: 1px solid #dee2e6;
+    }
+
+
+    .carousel-img {
+      height: 300px;
+      /* Reduced from 400px */
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  </style>
+
+  <style>
+    .card {
+      transition: all 0.3s;
+      margin-top: 8px;
+      height: 350px;
+      border-radius: 15px;
+    }
+
+    .card:hover {
+      transform: scale(1.08);
+    }
+
+    .card-img-top {
+      object-fit: contain;
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+    }
+
+    .card-title {
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      border-radius: 20px;
+    }
+  </style>
+
+  <style>
+    .custom-card {
+      background: #f8f9fa;
+      /* light grey */
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .custom-card:hover {
+      border-color: #d4af37;
+      /* gold */
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+      transform: translateY(-5px);
+      background: #fffaf0;
+      /* light golden tint */
+    }
+
+    .custom-card .card-title {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .custom-card .card-text {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .custom-card img {
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+
+
+    }
+
+    .custom-img {
+      height: 250px;
+      object-fit: cover;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+
+    .card {
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .card {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <img src="pics/logo.jpeg" alt="Logo" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%;">
+        <a class="navbar-brand" href="#">Velorra</a>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#divSignUp">Sign Up</button>
+        <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#divLogin">Login</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="text-center mt-5">
+    <h1 class="display-4 fw-bold">Welcome to Velorra</h1>
+    <p class="lead">Connecting Players to Tournaments with Style</p>
+  </section>
+
+  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="pics/34.jpg" class="d-block w-100 carousel-img" alt="...">
+      </div>
+  
+      <div class="carousel-item">
+        <img src="pics/m4.jpg" class="d-block w-100 carousel-img" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid justify-content-center">
+      <h3 class="text-center my-3">Our Services</h3>
+    </div>
+  </nav>
+  <br>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-lg custom-card mt-4">
+          <img src="pics/t1.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Tournaments</h5>
+            <p class="card-text text-center"> Create and manage tournaments with ease. Set match schedules, view live
+              results, and track winners.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-lg custom-card mt-4">
+          <img src="pics/event.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Organizers</h5>
+            <p class="card-text text-center"> Organizers can register events, assign teams, update results, and handle
+              all match logistics smoothly.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-lg custom-card mt-4">
+          <img src="pics/sp1.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Sports Players</h5>
+            <p class="card-text text-center"> Players can register for tournaments, view schedules, and track their game
+              stats and performance.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-lg custom-card mt-4">
+          <img src="pics/admin.avif" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Admin</h5>
+            <p class="card-text text-center">Admins handle user management,platform settings to ensure smooth
+              operations.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid justify-content-center">
+      <h3 class="text-center my-3">Our Mission</h3>
+    </div>
+  </nav>
+
+
+<div class="container mb-4">
+  <div class="row g-4 align-items-center">
+    <!-- Image Column -->
+    <div class="col-12 col-md-5">
+      <img src="pics/mission.jpeg" class="img-fluid rounded w-100" alt="Mission Image" />
+    </div>
+
+    <!-- Text Column -->
+    <div class="col-12 col-md-7">
+      <div class="p-4 rounded shadow" style="background-color: rgba(255, 255, 255, 0.9); color: #000;">
+        <p class="mb-0">
+          With Vellora, our mission is to revolutionize the way sports tournaments are organized, experienced, and remembered.
+          We believe sports bring people together, ignite passion, and drive excellence.
+          <br><br>
+          We empower organizers with tools to manage registrations, schedules, teams, and results effortlessly —
+          eliminating complexity and enhancing transparency.
+          <br><br>
+          Whether it's a school event or a national championship, we streamline communication, boost participation,
+          and promote fair play — creating a smarter, faster, and more engaging experience for all.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="text-center w-100 py-4">
+        <h3 class="mb-2">Meet the Developers</h3>
+        <p class="lead mb-0">The minds behind Vellora.</p>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-4">
+    <div class="row justify-content-center g-4">
+
+      <!-- Card 1: Rajesh Bansal -->
+      <div class="col-sm-6 col-md-5 col-lg-4">
+        <div class="card h-100">
+          <img src="pics/sir.jpg" class="card-img-top" alt="Mr. Rajesh Bansal">
+          <div class="card-body">
+            <h5 class="card-title">Under the guidance of</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">Mr. Rajesh Bansal</h6>
+            <p class="card-text small text-center">Founder – Bangalore Computer Education</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Rishika -->
+      <div class="col-sm-6 col-md-5 col-lg-4">
+        <div class="card h-100">
+          <img src="pics/IMG-20231219-WA0088.jpg" class="card-img-top" alt="Rishika">
+          <div class="card-body">
+            <h5 class="card-title">Developed By</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">Rishika</h6>
+            <p class="card-text small text-center">A student of Chitkara University</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid justify-content-center">
+      <h3 class="text-center my-3">Reach Us</h3>
+    </div>
+  </nav>
+  <div class="container mb-5">
+    <div class="row g-4">
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title text-success"><i class="fas fa-map-marker-alt me-2"></i>Location</h5>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d859.2937839767154!2d76.65977775817477!3d30.516086454976772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fc32344a6e2d7%3A0x81b346dee91799ca!2sChitkara%20University!5e0!3m2!1sen!2sin!4v1753246257184!5m2!1sen!2sin"
+              width="500" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title text-success"><i class="fas fa-envelope me-2"></i>Contact Info</h5>
+            <p>Email: rishikagoyal53@gmail.com</p>
+            <p>Phone: +91 9877626453</p>
+            <hr>
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">Enter Your Name</label>
+              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+            </div>
+            <div class="mb-3">
+              <label for="formGroupExampleInput2" class="form-label">Email</label>
+              <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="">
+            </div>
+            <div class="mb-3">
+              <label for="userMessage" class="form-label">Message</label>
+              <textarea class="form-control" id="userMessage" rows="4"
+                placeholder="Type your message here..."></textarea>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SignUp Modal -->
+   <div class="modal fade" tabindex="-1" id="divSignUp">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">SignUp Modal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" class="form-control" aria-describedby="emailHelp" id="txtEmail" name="txtEmail">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="txtPwd" name="txtPwd">
+            </div>
+            <select class="form-select" aria-label="Default select example" id="userType" name="userType">
+              <option selected>SELECT USER TYPE❤️</option>
+              <option value="Player">player</option>
+              <option value="Organizer">organizer</option>
+
+            </select><br>
+            <input type="button" class="btn btn-secondary" id="btnFetchWithAJAX" value="Submit"></button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal" tabindex="-1" id="divLogin">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg">
+          <h5 class="modal-title">Login Modal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="loginemail" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="loginpwd" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Login" id="btnLogin"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

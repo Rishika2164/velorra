@@ -1,0 +1,191 @@
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
+        integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        function showPrev(fileRef, prevRef) {   //agr pic ka preview dikhana ho to
+            const [file] = fileRef.files //for showing pic preview
+            if (file) {
+                prevRef.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#btnFetchWithAJAX").click(function () {
+                let obj = {
+                    //must be get only
+                    type: "get",
+                    url: "/fetch-player-details",
+                    data: {
+                        orgEmail: $("#playerEmail").val()
+                    }
+                };
+                $.ajax(obj).then(
+                    function (responseJSONAry) {
+                        console.log("AJAX response:", responseJSONAry);
+
+                        let emailid = responseJSONAry[0].emailid;
+                        let acardpicurl = responseJSONAry[0].acardpicurl;
+                        let profilepicurl = responseJSONAry[0].profilepicurl;
+                        let namee = responseJSONAry[0].namee;
+                        let gender = responseJSONAry[0].gender;
+                        let address = responseJSONAry[0].address;
+                        let contact = responseJSONAry[0].contact;
+                        let game = responseJSONAry[0].game;
+                        let otherinfo = responseJSONAry[0].otherinfo;
+                        $("#hiddenName").val(namee);
+
+                        $("#hiddenGender").val(gender);
+                        $("#playerEmail").val(emailid),
+                            $("#playerName").val(namee),
+
+                            $("#playerGender").val(gender),
+                            $("#playerAddress").val(address),
+                            $("#playerContact").val(contact),
+                            $("#playerGame").val(game),
+                            $("#playerOther").val(otherinfo),
+
+                            $("#prev").prop("src", acardpicurl);
+                        $("#prev2").prop("src", profilepicurl);
+                        $("#hdn").val(acardpicurl);
+                        $("#hdn2").val(profilepicurl);
+
+                    }).fail(function (err) {
+                        alert("Error: " + err.responseText);
+
+                    });
+            });
+        });
+    </script>
+
+
+</head>
+
+<body>
+    <div class="row ">
+        <div class="col-md-12  bg-dark text-white">
+            Players DashBoard
+        </div>
+    </div>
+    <div class="container mt-4">
+
+        <div class="row ">
+            <div class="col-md-8 offset-md-2 bg-dark text-white">
+                <center>
+                    <h2>Player Profile Form</h2>
+                </center>
+            </div>
+        </div>
+
+        <div class="col-md-8 offset-md-2">
+
+            <form action="profile-player" class="row g-3" method="post" enctype="multipart/form-data">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="playerEmail" class="form-label">Email ID</label>
+                            <input type="email" class="form-control" id="playerEmail" name="playerEmail" />
+                        </div>
+                        <input type="hidden" name="hdn" id="hdn">
+                        <input type="hidden" name="hdn2" id="hdn2">
+                        <!-- Search Button -->
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="button" id="btnFetchWithAJAX" class="btn btn-secondary w-100">
+                                Get Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="playerAdhar" class="form-label">Upload Front of Adhar Card</label>
+                    <input type="file" class="form-control" id="playerAdhar" name="playerAdhar"
+                        onchange="showPrev(playerAdhar,prev)" />
+                    <img src="" id="prev" alt="" width="100" height="100">
+                </div>
+                <div class="col-md-6">
+                    <label for="playerPic" class="form-label">Upload Your Profile Picture</label>
+                    <input type="file" class="form-control" id="playerPic" name="playerPic"
+                        onchange="showPrev(playerPic,prev2)" />
+                    <img src="" id="prev2" alt="" width="100" height="100">
+                </div>
+                <div class="col-md-6">
+                    <label for="playerName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="playerName" name="playerName" readonly />
+                    <input type="hidden" name="playerName" id="hiddenName" />
+                </div>
+                <!-- <div class="col-6">
+                    <label for="playerDate" class="form-label">Date Of Birth</label>
+                    <input type="date" class="form-control" id="playerDate" name="playerDate" disabled />
+                    <input type="hidden" name="playerDate" id="hiddenDate" />
+                </div> -->
+                <div class="col-md-6">
+                    <label for="playerGender" class="form-label">Gender</label>
+                    <select id="playerGender" name="playerGender" class="form-select" readonly>
+                        <option selected>Choose...</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Don't Prefer to Say</option>
+                    </select>
+                    <input type="hidden" name="playerGender" id="hiddenGender" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="playerAddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="playerAddress" name="playerAddress" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="playerContact" class="form-label">Contact Number</label>
+                    <input type="text" class="form-control" id="playerContact" name="playerContact" />
+                </div>
+                <div class="col-md-4">
+                    <label for="playerGame" class="form-label">Games You Play</label>
+                    <select id="playerGame" name="playerGame" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>Cricket</option>
+                        <option>Badminton</option>
+                        <option>Tennis</option>
+                        <option>FootBall</option>
+                        <option>BaseBall</option>
+                        <option>Archery</option>
+                        <option>SoftBall</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="playerOther" class="form-label">Other Information</label>
+                    <textarea class="form-control" id="playerOther" name="playerOther" style="height: 100px"></textarea>
+                </div>
+
+
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-3 text-center">
+                        <button type="submit" class="btn btn-secondary w-100">Upload Data</button>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <input type="submit" value="Modify" class="btn btn-secondary w-100" formaction="/update-player">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <nav class="navbar bg-dark text-white mt-5">
+        <div class="container-fluid justify-content-center py-2">
+            <span class="navbar-brand mb-0 h1 text-white">www.vellora.com</span>
+        </div>
+    </nav>
+</body>

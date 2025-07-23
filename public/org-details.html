@@ -1,0 +1,196 @@
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+        </script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        function showPrev(fileRef, prevRef) {   //agr pic ka preview dikhana ho to
+            const [file] = fileRef.files //for showing pic preview
+            if (file) {
+                prevRef.src = URL.createObjectURL(file)
+            }
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#btnFetchWithAJAX").click(function () {
+                let obj = {
+                    //must be get only
+                    type: "get",
+                    url: "/get-one",
+                    data: {
+                        orgEmail: $("#orgEmail").val()
+                    }
+                };
+                $.ajax(obj).then(
+                    function (responseJSONAry) {
+                        console.log("AJAX response:", responseJSONAry);
+                        let emailid = responseJSONAry[0].emailid;
+                        let orgname = responseJSONAry[0].orgname;
+                        let regnumber = responseJSONAry[0].regnumber;
+                        let address = responseJSONAry[0].address;
+                        let city = responseJSONAry[0].city;
+                        let sports = responseJSONAry[0].sports;
+                        let website = responseJSONAry[0].website;
+                        let insta = responseJSONAry[0].insta;
+                        let head = responseJSONAry[0].head;
+                        let contact = responseJSONAry[0].contact;
+                        let picurl = responseJSONAry[0].picurl;
+                        let otherinfo = responseJSONAry[0].otherinfo;
+                        $("#orgEmail").val(emailid),
+                            $("#orgname").val(orgname),
+                            $("#orgnumber").val(regnumber),
+                            $("#orgaddress").val(address),
+                            $("#orgcity").val(city),
+                            $("#orgdeals").val(sports),
+                            $("#orgwebsite").val(website),
+                            $("#orginsta").val(insta),
+                            $("#orghead").val(head),
+                            $("#orgcontact").val(contact),
+                            $("#orgother").val(otherinfo),
+
+                            $("#prev").prop("src", picurl);
+                        $("#hdn").val(picurl);
+
+                    }).fail(function (err) {
+                        alert("Error: " + err.responseText);
+
+                    });
+            });
+        });
+    </script>
+    <script>
+        function showUser() {
+            let activeUser = localStorage.getItem("activeUser");
+            document.getElementById("orgEmail").innerHTML = activeUser;
+        }
+    </script>
+
+</head>
+
+<body onload="showUser();">
+
+
+    <div class="row ">
+        <div class="col-md-12  bg-dark text-white">
+            Organizers DashBoard
+        </div>
+    </div>
+
+    <div class="container mt-4">
+
+        <div class="row ">
+            <div class="col-md-8 offset-md-2 bg-dark text-white">
+                <center>
+                    <h2>Profile Page</h2>
+                </center>
+            </div>
+        </div>
+
+        <div class="col-md-8 offset-md-2">
+
+            <form action="/org-signup" class="row g-3" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="hdn" id="hdn">
+                <div class="col-md-8">
+                    <label for="orgEmail" class="form-label">Emailid</label>
+                    <input type="email" class="form-control" id="orgEmail" name="orgEmail" />
+                </div>
+
+                <!-- ****Search Button*** -->
+                <div class="col-md-3 text-end">
+                    <label class="form-label d-block">&nbsp;</label>
+                    <button type="button" id="btnFetchWithAJAX" class="btn btn-secondary">
+                        Search
+                    </button>
+                </div>
+                <!-- ********************** -->
+
+                <div class="col-md-6">
+                    <label for="orgname" class="form-label">Org Name</label>
+                    <input type="text" class="form-control" id="orgname" name="orgname" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="orgnumber" class="form-label">Registration Number</label>
+                    <input type="number" class="form-control" id="orgnumber" name="orgnumber" required/>
+                </div>
+
+                <div class="col-6">
+                    <label for="orgaddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="orgaddress" name="orgaddress" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="orgcity" class="form-label">City</label>
+                    <input type="text" class="form-control" id="orgcity" name="orgcity" required/>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="orgdeals" class="form-label">Deals in Sports</label>
+                    <input type="text" class="form-control" id="orgdeals" name="orgdeals" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="orgwebsite" class="form-label">Website</label>
+                    <input type="text" class="form-control" id="orgwebsite" name="orgwebsite" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="orginsta" class="form-label">Insta Link</label>
+                    <input type="text" class="form-control" id="orginsta" name="orginsta" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="orghead" class="form-label">Organization Head</label>
+                    <input type="text" class="form-control" id="orghead" name="orghead" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="orgcontact" class="form-label">Contact Number</label>
+                    <input type="text" class="form-control" id="orgcontact" name="orgcontact" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="orgpic" class="form-label">Registration Certificate Pic</label>
+                    <input type="file" class="form-control" id="orgpic" name="orgpic"
+                        onchange="showPrev(orgpic,prev)" />
+                    <img src="" id="prev" alt="" width="100" height="100">
+                </div>
+
+
+                <div class="col-md-12">
+                    <label for="orgother" class="form-label">Other Information</label>
+                    <input type="text" class="form-control" id="orgother" name="orgother" required/>
+                </div>
+
+                <center>
+                    <div class="col-6 d-inline-block" style="max-width: fit-content;">
+                        <button type="submit" class="btn btn-secondary">Send to Server</button>
+                    </div>
+
+                    <div class="col-6 d-inline-block" style="max-width: fit-content;">
+                        <input type="submit" value="Update" class="btn btn-secondary" formaction="/update-user">
+                    </div>
+                </center>
+
+            </form>
+        </div>
+    </div>
+
+    <nav class="navbar bg-dark text-white mt-5">
+        <div class="container-fluid justify-content-center py-2">
+            <span class="navbar-brand mb-0 h1 text-white">www.vellora.com</span>
+        </div>
+    </nav>
+
+</body>
+
+</html>

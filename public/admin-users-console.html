@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        var mymodule = angular.module("kuchModule", []);
+
+        mymodule.controller("kuchController", function ($scope, $http) {
+
+            $scope.jsonArray = []
+
+            $scope.doFetchAll = function () {
+                var url = "/do-fetch";
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    //  alert(JSON.stringify(response.data));
+                    $scope.jsonArray = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            }
+            $scope.doBlock = function (emailid) {
+                //  alert();
+                var url = "/do-block?emailid=" + emailid;
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    alert(JSON.stringify(response.data));
+                    $scope.doFetchAll();
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            }
+            $scope.doUnblock = function (emailid) {
+                //  alert();
+                var url = "/do-unblock?emailid=" + emailid;
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    alert(JSON.stringify(response.data));
+                    $scope.doFetchAll();
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            }
+        })
+    </script>
+</head>
+
+
+
+
+<body ng-app="kuchModule" ng-controller="kuchController" ng-init="doFetchAll();">
+
+    <div class="row ">
+        <div class="col-md-12  bg-dark text-white">
+            Admin DashBoard
+        </div>
+        </div>
+        <div class="container">
+            <table class="table">
+                <center>
+                    <h2>User Admin Console</h2>
+                    <br>
+                </center>
+                <thead>
+                    <tr>
+                        <th scope="col">Sr.No</th>
+                        <th scope="col">Emailid</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Usertype</th>
+                        <th scope="col">Date of Joining</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="obj in jsonArray">
+                        <td>{{$index+1}}</td>
+                        <td>{{obj.emailid}}</td>
+                        <td>{{obj.password}}</td>
+                        <td>{{obj.userstype}}</td>
+                        <td>{{obj.dos}}</td>
+                        <!-- <td>{{obj.status}}</td> -->
+                        <td>
+                            <span class="badge"
+                                ng-class="{'bg-danger': obj.status == 0, 'bg-success': obj.status == 1}">
+                                {{obj.status == 1 ? 'Resumed' : 'Blocked'}}
+                            </span>
+                        </td>
+
+                        <th>
+                            <input type="button" value="Block" class="btn btn-danger" ng-click="doBlock(obj.emailid)">
+                            <input type="button" value="Resume" class="btn btn-success"
+                                ng-click="doUnblock(obj.emailid)">
+
+                        </th>
+                    </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+</body>
+
+</html>
