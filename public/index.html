@@ -32,7 +32,7 @@
             alert("Error: " + err.message);
           });
       });
-// ----------------Login------------------------------------
+      // ----------------Login------------------------------------
       $('#btnLogin').click(function () {
         let obj = {
           type: "get",
@@ -58,45 +58,53 @@
             alert("Error: " + err.message);
           });
       });
-// -------------------Validation(email)-----------------------------------
-       $("#txtEmail").keyup(function () {
-                let email = $(this).val();//getter
-                let regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
-                // alert(email);
-                if (email == "") {
-                    $("#errMsgE").html("Email required").addClass("not-ok").removeClass("ok");
-                    // $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
-                    // $(this).focus();
-                } else if (regex.test(email) == false) {
-                    $("#errMsgE").html("Invalid Email Id").addClass("not-ok").removeClass("ok");
-                //     $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
-                }
-                else {
-                    $("#errMsgE").html("Valid Email Id").addClass("ok").removeClass("not-ok");
-                    // $("#errPicE").addClass("ok-pic").removeClass("not-ok-pic");
-                }
-            })
-            // --------------Validation(pwd)-------------------------------------
-            $("#txtPwd").blur(function () {
-                let regex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
-                let pwd = $(this).val();
-                if (regex.test(pwd) == true)
-                    $(("#errPwd")).html("Correct");
-                // $("#lblPwd").html("Correct");
-                else
-                    $("#errPwd").html("Incorrect Password");
-            })
-    });
+      // -------------------Validation(email)-----------------------------------
+      $("#txtEmail").keyup(function () {
+        let email = $(this).val();//getter
+        let regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+        // alert(email);
+        if (email == "") {
+          $("#errMsgE").html("Email required").addClass("not-ok").removeClass("ok");
+          // $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
+          // $(this).focus();
+        } else if (regex.test(email) == false) {
+          $("#errMsgE").html("Invalid Email Id").addClass("not-ok").removeClass("ok");
+          //     $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
+        }
+        else {
+          $("#errMsgE").html("Valid Email Id").addClass("ok").removeClass("not-ok");
+          // $("#errPicE").addClass("ok-pic").removeClass("not-ok-pic");
+        }
+      })
+      // --------------Validation(pwd)-------------------------------------
+      $("#txtPwd").blur(function () {
+        let regex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+        let pwd = $(this).val();
+        //     if (regex.test(pwd) == true)
+        //         $(("#errPwd")).html("Correct");
+        //     // $("#lblPwd").html("Correct");
+        //     else
+        //         $("#errPwd").html("Incorrect Password");
+        // })
+        if (pwd == "") {
+          $("#errPwd").html("Password is required").removeClass("ok").addClass("not-ok");
+        } else if (!regex.test(pwd)) {
+          $("#errPwd").html("Min 8 chars with uppercase, lowercase, and digit").removeClass("ok").addClass("not-ok");
+        } else {
+          $("#errPwd").html("Strong Password").removeClass("not-ok").addClass("ok");
+        }
+        });
   </script>
   <style>
     .ok {
-  color: green;
-  font-weight: bold;
-}
-.not-ok {
-  color: red;
-  font-weight: bold;
-}
+      color: green;
+      font-weight: bold;
+    }
+
+    .not-ok {
+      color: red;
+      font-weight: bold;
+    }
 
     body {
       background-color: #f8f9fa;
@@ -285,7 +293,7 @@
       <div class="carousel-item active">
         <img src="pics/34.jpg" class="d-block w-100 carousel-img" alt="...">
       </div>
-  
+
       <div class="carousel-item">
         <img src="pics/m4.jpg" class="d-block w-100 carousel-img" alt="...">
       </div>
@@ -366,30 +374,31 @@
   </nav>
 
 
-<div class="container mb-4">
-  <div class="row g-4 align-items-center">
-    <!-- Image Column -->
-    <div class="col-12 col-md-5">
-      <img src="pics/mission.jpeg" class="img-fluid rounded w-100" alt="Mission Image" />
-    </div>
+  <div class="container mb-4">
+    <div class="row g-4 align-items-center">
+      <!-- Image Column -->
+      <div class="col-12 col-md-5">
+        <img src="pics/mission.jpeg" class="img-fluid rounded w-100" alt="Mission Image" />
+      </div>
 
-    <!-- Text Column -->
-    <div class="col-12 col-md-7">
-      <div class="p-4 rounded shadow" style="background-color: rgba(255, 255, 255, 0.9); color: #000;">
-        <p class="mb-0">
-          With Vellora, our mission is to revolutionize the way sports tournaments are organized, experienced, and remembered.
-          We believe sports bring people together, ignite passion, and drive excellence.
-          <br><br>
-          We empower organizers with tools to manage registrations, schedules, teams, and results effortlessly —
-          eliminating complexity and enhancing transparency.
-          <br><br>
-          Whether it's a school event or a national championship, we streamline communication, boost participation,
-          and promote fair play — creating a smarter, faster, and more engaging experience for all.
-        </p>
+      <!-- Text Column -->
+      <div class="col-12 col-md-7">
+        <div class="p-4 rounded shadow" style="background-color: rgba(255, 255, 255, 0.9); color: #000;">
+          <p class="mb-0">
+            With Vellora, our mission is to revolutionize the way sports tournaments are organized, experienced, and
+            remembered.
+            We believe sports bring people together, ignite passion, and drive excellence.
+            <br><br>
+            We empower organizers with tools to manage registrations, schedules, teams, and results effortlessly —
+            eliminating complexity and enhancing transparency.
+            <br><br>
+            Whether it's a school event or a national championship, we streamline communication, boost participation,
+            and promote fair play — creating a smarter, faster, and more engaging experience for all.
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
 
@@ -479,7 +488,7 @@
   </div>
 
   <!-- SignUp Modal -->
-   <div class="modal fade" tabindex="-1" id="divSignUp">
+  <div class="modal fade" tabindex="-1" id="divSignUp">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -492,31 +501,31 @@
               <label for="txtEmail" class="form-label">Email address</label>
               <input type="email" class="form-control" id="txtEmail" name="txtEmail">
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-             
-                        <!-- <div style="margin-right: 10px;" id="errPicE"></div> -->
-                        <div id="errMsgE">&</div>
-                    
+
+              <!-- <div style="margin-right: 10px;" id="errPicE"></div> -->
+              <div id="errMsgE">&</div>
+
             </div>
             <div class="mb-3">
               <label for="txtPwd" class="form-label">Password</label>
               <input type="password" class="form-control" id="txtPwd" name="txtPwd">
               <div id="errPwd"></div>
-                    <!-- <i class="fa-solid fa-eye fa-bounce" id="eye"></i> -->
+              <!-- <i class="fa-solid fa-eye fa-bounce" id="eye"></i> -->
 
-                </div>
             </div>
-            <select class="form-select" aria-label="Default select example" id="userType" name="userType">
-              <option selected>SELECT USER TYPE❤️</option>
-              <option value="Player">player</option>
-              <option value="Organizer">organizer</option>
-
-            </select><br>
-            <input type="button" class="btn btn-secondary" id="btnFetchWithAJAX" value="Submit"></button>
-          </form>
         </div>
+        <select class="form-select" aria-label="Default select example" id="userType" name="userType">
+          <option selected>SELECT USER TYPE❤️</option>
+          <option value="Player">player</option>
+          <option value="Organizer">organizer</option>
 
+        </select><br>
+        <input type="button" class="btn btn-secondary" id="btnFetchWithAJAX" value="Submit"></button>
+        </form>
       </div>
+
     </div>
+  </div>
   </div>
 
   <!-- Login Modal -->
