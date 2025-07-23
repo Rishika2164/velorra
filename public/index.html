@@ -49,8 +49,8 @@
             else if (response == "Invalid") alert("Invalid email or password");
             else {
               localStorage.setItem("activeUser", $('#loginemail').val());
-              if (response == "player") location.href = "dash-player.html";
-              else if (response == "organizer") location.href = "dash-organizer.html";
+              if (response == "Player") location.href = "dash-player.html";
+              else if (response == "Organizer") location.href = "dash-organizer.html";
               else if (response == "admin") location.href = "dash-admin.html";
             }
           },
