@@ -32,7 +32,7 @@
             alert("Error: " + err.message);
           });
       });
-
+// ----------------Login------------------------------------
       $('#btnLogin').click(function () {
         let obj = {
           type: "get",
@@ -58,6 +58,34 @@
             alert("Error: " + err.message);
           });
       });
+// -------------------Validation(email)-----------------------------------
+       $("#txtEmail").keyup(function () {
+                let email = $(this).val();//getter
+                let regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+                // alert(email);
+                if (email == "") {
+                    $("#errMsgE").html("Empty").addClass("not-ok").removeClass("ok");
+                    $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
+                    $(this).focus();
+                } else if (regex.test(email) == false) {
+                    $("#errMsgE").html("Invalid Email Id").addClass("not-ok").removeClass("ok");
+                    $("#errPicE").addClass("not-ok-pic").removeClass("ok-pic");
+                }
+                else {
+                    $("#errMsgE").html("Ok").addClass("ok").removeClass("not-ok");
+                    $("#errPicE").addClass("ok-pic").removeClass("not-ok-pic");
+                }
+            })
+            // --------------Validation(pwd)-------------------------------------
+            $("#txtPwd").blur(function () {
+                let regex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+                let pwd = $(this).val();
+                if (regex.test(pwd) == true)
+                    $(("#errPwd")).html("Correct");
+                // $("#lblPwd").html("Correct");
+                else
+                    $("#errPwd").html("Incorrect Password");
+            })
     });
   </script>
   <style>
@@ -455,10 +483,19 @@
               <label for="exampleInputEmail1" class="form-label">Email address</label>
               <input type="email" class="form-control" aria-describedby="emailHelp" id="txtEmail" name="txtEmail">
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <div style="display: flex;">
+                        <!-- <div style="margin-right: 10px;" id="errPicE"></div> -->
+                        <div id="errMsgE">&</div>
+                    </div>
             </div>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Password</label>
               <input type="password" class="form-control" id="txtPwd" name="txtPwd">
+              <div class="txtbox-div" style="width: 90%;">
+                    <input type="password" style="border: 0px;" id="txtPwd">
+                    <!-- <i class="fa-solid fa-eye fa-bounce" id="eye"></i> -->
+
+                </div>
             </div>
             <select class="form-select" aria-label="Default select example" id="userType" name="userType">
               <option selected>SELECT USER TYPE❤️</option>
