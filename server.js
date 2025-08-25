@@ -28,14 +28,25 @@ cloudinary.config({
     api_secret: '8ildnWRRyZ43m6bk5aYMDVHvDck' // Click 'View API Keys' above to copy your API secret
 });
 // =========================================
-let dbConfig = "mysql://avnadmin:AVNS_Ku-R28NvnxLE3b3Sdd4@mysql-2f418e9-rishikagoyal53-c65f.c.aivencloud.com:17511/defaultdb"//for connectivity with aiven
-let mySqlVen = mysql2.createConnection(dbConfig);
-mySqlVen.connect(function (errKuch) {
-    if (errKuch == null)
-        console.log("Aiven Connected Successfullyyy!!!");
-    else
-        console.log(errKuch.message);
-})
+// let dbConfig = "mysql://avnadmin:AVNS_Ku-R28NvnxLE3b3Sdd4@mysql-2f418e9-rishikagoyal53-c65f.c.aivencloud.com:17511/defaultdb"//for connectivity with aiven
+// let mySqlVen = mysql2.createConnection(dbConfig);
+// mySqlVen.connect(function (errKuch) {
+//     if (errKuch == null)
+//         console.log("Aiven Connected Successfullyyy!!!");
+//     else
+//         console.log(errKuch.message);
+// })
+const mysql = require("mysql2");
+
+let mySqlVen = mysql.createPool({
+    uri: "mysql://avnadmin:AVNS_Ku-R28NvnxLE3b3Sdd4@mysql-2f418e9-rishikagoyal53-c65f.c.aivencloud.com:17511/defaultdb",
+    waitForConnections: true,
+    connectionLimit: 10,   // max simultaneous connections
+    queueLimit: 0
+});
+
+console.log("✅ Aiven Pool Created Successfully!");
+
 // // -----------------Gemini-AI--------------------
 app.get("/ai", function (req, resp) {
 
